@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Kanal Formu{% endblock %}
+{% block content %}
+<h1>{{ 'Kanal Düzenle' if channel else 'Yeni Kanal' }}</h1>
+<form method="post" class="form-card">
+  <label>
+    İsim
+    <input name="name" value="{{ channel.name if channel else '' }}" required />
+  </label>
+  <label>
+    .m3u8 URL
+    <input name="url" value="{{ channel.url if channel else '' }}" required />
+  </label>
+  <label>
+    Kategori
+    <input name="category" value="{{ channel.category if channel else '' }}" />
+  </label>
+  <label class="row">
+    <input type="checkbox" name="is_public" {% if channel and channel.is_public or not channel %}checked{% endif %} />
+    Public (listeye çıksın)
+  </label>
+  <button type="submit">Kaydet</button>
+</form>
+{% endblock %}

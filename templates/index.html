@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}IPTV İzle{% endblock %}
+{% block content %}
+<h1>Yayınlar</h1>
+
+<div class="grid">
+  {% for ch in channels %}
+  <div class="card">
+    <div class="card-head">
+      <div>
+        <h3>{{ ch.name }}</h3>
+        <small>{{ ch.category or 'Genel' }}</small>
+      </div>
+      <a class="btn" href="{{ url_for('embed') }}?channel_id={{ ch.id }}" target="_blank">Embed</a>
+    </div>
+    <div class="player-wrap">
+      <!-- HLS: hls.js YOK. Sadece native destekli tarayıcılarda çalışır. -->
+      <video controls preload="none" playsinline
+             onerror="window.nativeHlsError(this)"
+             data-url="{{ ch.url }}">
+        <source src="{{ ch.url }}" type="application/vnd.apple.mpegurl">
+        Tarayıcınız HLS (.m3u8) formatını desteklemiyor.
+      </video>
+      <div class="compat-note">
+        <span class="warn">Not:</span> Chrome/Firefox masaüstünde native HLS çalışmayabilir.
+        Safari / iOS / bazı Android tarayıcılarını kullanın.
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p>Hiç kanal yok.</p>
+  {% endfor %}
+</div>
+{% endblock %}

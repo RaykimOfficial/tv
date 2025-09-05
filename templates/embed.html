@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ channel.name }} — Embed</title>
+  <style>
+    html, body { margin:0; height:100%; background:#000; }
+    .wrap { display:flex; align-items:center; justify-content:center; height:100%; }
+    video { width:100%; height:100%; max-height:100vh; background:#000; }
+    .msg { position:absolute; top:8px; left:8px; padding:4px 8px; background:#111; color:#fff; font:14px/1.2 sans-serif; opacity:.85; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <video id="v" controls autoplay playsinline>
+      <source src="{{ channel.url }}" type="application/vnd.apple.mpegurl">
+      Tarayıcınız HLS (.m3u8) formatını desteklemiyor.
+    </video>
+  </div>
+
+  <!-- Discord Activity notu:
+       Bu sayfa iframe ile gömülebilir. Discord Embedded App içinden bu URL'i
+       (örn: https://domain.com/embed?channel_id=123) yükleyebilirsiniz.
+       CORS için X-Frame-Options ayarlamayın veya uygun domainlere izin verin. -->
+  <div class="msg">{{ channel.name }}</div>
+
+  <script>
+    // Basit hata bildirimi
+    const v = document.getElementById('v');
+    v.addEventListener('error', () => {
+      console.log('Video error', v.error);
+    });
+  </script>
+</body>
+</html>
